@@ -127,7 +127,9 @@ class Vosk: RCTEventEmitter {
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
             // Allow haptics and system sounds during recording
-            try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
+            if #available(iOS 13.0, *) {
+                try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
+            }
 
             if (grammar != nil && grammar!.isEmpty == false) {
                 let jsonGrammar = try! JSONEncoder().encode(grammar);
