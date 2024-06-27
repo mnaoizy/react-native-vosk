@@ -99,6 +99,7 @@ class Vosk: RCTEventEmitter {
 
     /// Start speech recognition
     @objc(start:withResolver:withRejecter:)
+    @available(iOS 13.0, *)
     func start(rawOptions: [String : Any]?, resolve:RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
         let audioSession = AVAudioSession.sharedInstance()
 
@@ -127,9 +128,8 @@ class Vosk: RCTEventEmitter {
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
             // Allow haptics and system sounds during recording
-            if #available(iOS 13.0, *) {
-                try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
-            }
+            try audioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
+
 
             if (grammar != nil && grammar!.isEmpty == false) {
                 let jsonGrammar = try! JSONEncoder().encode(grammar);
